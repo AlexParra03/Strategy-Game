@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+	<h1> World Ranking </h1>
+</head>
+
+<body>
+
+	<?php 	
+	
+		session_start();
+		$userID = $_SESSION['ID'];
+		
+		$connection = mysql_connect($host,$admin,$password) or die("Could not connect to server SQL");
+	
+		mysql_select_db($database,$connection) or die("Could not connect to database");
+		$data = mysql_query("SELECT * FROM User;");
+		
+		$totalUsers = mysql_num_rows($data);
+		$query = mysql_query("SELECT * FROM User WHERE ID = '$userID' ");
+		$userData = mysql_fetch_array($query);
+	?>
+	
+	<div class="content">
+		<div class="topmenu">
+			<ul>
+				<li> <a href="food.html"> Food <p  > <?php echo $userData['FOOD']; ?> </p> </a>  </li>
+				<li> <a href="gold.html"> Gold <p  > <?php echo $userData['GOLD']; ?> </p> </a>  </li>
+				<li> <a href="metal.html"> Metal <p> <?php echo $userData['METAL']; ?> </p> </a>  </li>
+				<li> <a href="army.html"> Army <p  > <?php echo ($userData['SOLDIER1'] + $userData['SOLDIER2'] + $userData['SOLDIER3']); ?> </p> </a>  </li>
+			<ul>
+		</div>
+		
+		<table class="central" style="border: 1px solid black","border-collapse: collapse">
+			<th> User Name  |</th>
+			<th>| Army  </th>
+			<?php
+				for($id=1; $id<=$totalUsers; $id++) {
+					echo "<tr>";
+					$getName = mysql_query("SELECT NAME FROM User WHERE ID = '$id' ");
+					$name =  mysql_fetch_array($getName);
+					$getArmy = mysql_query("SELECT SOLDIER1, SOLDIER2, SOLDIER3 FROM User WHERE ID = '$id' ");
+					$army = mysql_fetch_array($getArmy);
+					//visual effects on own name
+					if ($name['NAME'] == $userData['NAME']) { echo "<td style='color:#FB0000'>" . $name['NAME'] . "</td>";
+					} else { echo "<td>" . $name['NAME'] . "</td>";};
+					echo "<td>|  " . ($army['SOLDIER1'] + $army['SOLDIER2'] + $army['SOLDIER3']) . "</td>";
+					if ($name['NAME'] == $userData['NAME']) {  "<td>  </td>";
+					} else {
+					echo "<td> <button type='button' onclick='AttackID(this.id)'; id='" . $name['NAME'] . "'>Attack</button></td>";
+					
+					};
+					echo "</tr>";
+				};
+			?>
+		</table>
+		
+			<div class="bottommenu">
+				<ul>
+					<li> <a > World Map [Work in progress] </a> </li>
+					<li> <a href="ranking.html"> Ranking </a> </li>
+					<li> <a > Alliances [Work in progress]</a> </li>
+				</ul>
+			</div>
+	</div>
+	
+<script type="text/javascript" >
+    var AttackID = function(attackingName) {
+	window.location.href = "http://war-strategy.net76.net/attack.html?defender="+ attackingName;
+
+			
+		
+	}; 
+
+
+</script>
+	
+</body>
+</html>	

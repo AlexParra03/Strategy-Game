@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<script type="text/javascript" ></script>
+	<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+	<h3> Attacking </h3>
+	<?php 	
+	
+		session_start();
+		$userID = $_SESSION['ID'];
+		
+		$connection = mysql_connect("mysql2.000webhost.com","a6173051_admin","camote2434") or die("Could not connect to server SQL");
+		mysql_select_db("a6173051_data1",$connection) or die("Could not connect to database");
+		$data = mysql_query("SELECT * FROM User;");
+		$totalUsers = mysql_num_rows($data);
+		$query = mysql_query("SELECT * FROM User WHERE ID = '$userID' ");
+		$userData = mysql_fetch_array($query);
+        if($_GET['defender']) {
+			$defender = $_GET['defender'];
+		} else {
+			$defender = "Not_found";
+		};
+	?>
+</head>
+
+<body>
+
+<div class="content">
+	<div class="topmenu">
+		<ul>
+			<li> <a href="food.html"> Food <p  > <?php echo $userData['FOOD']; ?> </p> </a>  </li>
+			<li> <a href="gold.html"> Gold <p  > <?php echo $userData['GOLD']; ?> </p> </a>  </li>
+			<li> <a href="metal.html"> Metal <p> <?php echo $userData['METAL']; ?> </p> </a>  </li>
+			<li> <a href="army.html"> Army <p  > <?php echo ($userData['SOLDIER1'] + $userData['SOLDIER2'] + $userData['SOLDIER3']); ?> </p> </a>  </li>
+		<ul>
+	</div>
+	
+	
+	<div class="central" method="post" action="sendattack.php">
+		<form action="sendattack.php" method="post">
+			Attack User:<br>
+			<input type="text" name="attackUser" value=<?php echo $defender ?>>
+			<br><br><br><br>
+			Send SOLDIER1:<br>
+			<input type="text" name="sendSoldier1">
+			<br><br>
+			Send SOLDIER2:<br>
+			<input type="text" name="sendSoldier2">
+			<br><br>
+			Send SOLDIER3:<br>
+			<input type="text" name="sendSoldier3">
+			<br><br>
+			<input type="submit" value="Send Attack!">
+			
+		</form>
+	</div>
+	
+	
+	<div class="bottommenu">
+		<ul>
+			<li> <a href=""> World Map </a> </li>
+			<li> <a href="ranking.html"> Ranking </a> </li>
+			<li> <a href=""> Alliances </a> </li>
+		</ul>
+	</div>
+</div>
+</body>
+</html>
+
+

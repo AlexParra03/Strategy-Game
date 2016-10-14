@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+	<title> Game prototype </title>
+	<h4> War V0.0 </h4>
+</head>
+
+<body>
+	<?php 	
+	
+		session_start();
+		$userID = $_SESSION['ID'];
+		
+		$connection = mysql_connect("mysql2.000webhost.com","a6173051_admin","camote2434") or die("Could not connect to server SQL");
+		mysql_select_db("a6173051_data1",$connection) or die("Could not connect to database");
+		$query = mysql_query("SELECT * FROM User WHERE ID = '$userID' ");
+		$userData = mysql_fetch_array($query);
+		
+	?>
+	
+<div class="content">
+	<div class="topmenu">
+		<ul>
+			<li> <a href="food.html"> Food <p  > <?php echo $userData['FOOD']; ?> </p> </a>  </li>
+			<li> <a href="gold.html"> Gold <p  > <?php echo $userData['GOLD']; ?> </p> </a>  </li>
+			<li> <a href="metal.html"> Metal <p> <?php echo $userData['METAL']; ?> </p> </a>  </li>
+			<li> <a href="army.html"> Army <p  > <?php echo ($userData['SOLDIER1'] + $userData['SOLDIER2'] + $userData['SOLDIER3']); ?> </p> </a>  </li>
+		<ul>
+	</div>
+
+	<div class="central" >
+	<form>
+	<table>
+		<th> Class </th>
+		<th> Quantity </th>
+		<tr>
+			<td> SoldierType 1 </td>
+			<td> <?php echo $userData['SOLDIER1'] ?> </td>
+			<td> <!- send variable via URL -> </td>
+		</tr>
+		
+		<tr>
+			<td> SoldierType 1 </td>
+			<td> <?php echo $userData['SOLDIER2'] ?> </td>
+		</tr>
+		
+		<tr>
+			<td> SoldierType 1 </td>
+			<td> <?php echo $userData['SOLDIER3'] ?> </td>
+		</tr>
+		
+	</table>
+	<form>
+	</div>
+	
+	<div class="bottommenu">
+		<ul>
+			<li> <a > World Map [Work in progress] </a> </li>
+			<li> <a href="ranking.html"> Ranking </a> </li>
+			<li> <a > Alliances [Work in progress]</a> </li>
+		</ul>
+	</div>
+	
+</div>
+
+
+
+
+</body>
+</html>

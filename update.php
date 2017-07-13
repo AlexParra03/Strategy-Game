@@ -4,7 +4,7 @@ ignore_user_abort(true); // run script in background
 set_time_limit(0);       // run script forever 
 $interval = 300;         // do every 1 minute...
 
-$connection = mysql_connect("mysql2.000webhost.com","a6173051_admin","camote2434") 
+$connection = mysql_connect("mysql2.000webhost.com","a6173051_admin","") 
     or die("Could not connect to server SQL");
 	
 mysql_select_db("a6173051_data1",$connection)

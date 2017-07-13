@@ -1,6 +1,6 @@
 <?php  
 	
-$connection = mysql_connect("mysql2.000webhost.com","a6173051_admin","camote2434") 
+$connection = mysql_connect("mysql2.000webhost.com","a6173051_admin","") 
     or die("Could not connect to server");
 	
 mysql_select_db("a6173051_data1",$connection)
